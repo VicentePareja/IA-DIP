@@ -93,7 +93,7 @@ class Historial:
         self.historial.append(aux)
         
     
-def simular(tablero, historial):
+def simular(tablero, historial, tiempo):
     foco_inicial_x = random.randint(0, tablero.ancho-1)
     foco_inicial_y = random.randint(0, tablero.largo-1)
     tablero.mapa[foco_inicial_y][foco_inicial_x].cambiar_estado(True)
@@ -101,30 +101,38 @@ def simular(tablero, historial):
     tablero.viento = viento
     tablero.actualizar()
     historial.agregar(tablero.mapa)
-    for t in range(1,20):
+    for t in range(1,tiempo):
         tablero.quemar()
 
         tablero.actualizar()
         historial.agregar(tablero.mapa)
-    return historial
+    foco_inicial = [foco_inicial_x, foco_inicial_y]
+    tablero_inicial = historial.historial[0]
+    tablero_final = historial.historial[-1]
+    x = {"foco_inicial": foco_inicial, "tablero_inicial": tablero_inicial, "viento": viento, "tiempo": tiempo}
+    y = tablero_final
+    datos = {"x": x, "y": y}
 
-tablero = Mapa(30,30)
+    return datos
+
+tablero = Mapa(5,5)
 historial = Historial()
 
 for i in range(tablero.largo):
     for j in range(tablero.ancho):
         tablero.mapa[i][j] = Casilla()
     
-a = simular(tablero, historial)
+a = simular(tablero, historial,20)
+
+print(a)
 
 
+# for i in range(len(a.historial)):
+#     matriz = np.array(a.historial[i])
 
-for i in range(len(a.historial)):
-    matriz = np.array(a.historial[i])
-
-    np.savetxt("matriz_bonita.txt", matriz, fmt="%4d")
-    with open("matriz_bonita.txt", "r") as file:
-        print(file.read())
+#     np.savetxt("matriz_bonita.txt", matriz, fmt="%4d")
+#     with open("matriz_bonita.txt", "r") as file:
+#         print(file.read())
 
     
 
