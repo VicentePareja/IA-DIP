@@ -67,8 +67,6 @@ class Historial:
                 else:
                     aux[i, j] = int(mapa.mapa[i, j].prob*100)
         self.historial.append(aux)
-
-
         
     
 def simular(tablero, historial, tiempo):
