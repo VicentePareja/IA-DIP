@@ -1,4 +1,5 @@
 import numpy as np
+import pandas as pd
 import random
 
 class Mapa:
@@ -101,30 +102,45 @@ def simular(tablero, historial, tiempo):
     tablero.viento = viento
     tablero.actualizar()
     historial.agregar(tablero.mapa)
-    for t in range(1,tiempo):
+    for t in range(1, tiempo):
         tablero.quemar()
-
         tablero.actualizar()
         historial.agregar(tablero.mapa)
-    foco_inicial = [foco_inicial_x, foco_inicial_y]
-    tablero_inicial = historial.historial[0]
-    tablero_final = historial.historial[-1]
-    x = {"foco_inicial": foco_inicial, "tablero_inicial": tablero_inicial, "viento": viento, "tiempo": tiempo}
-    y = tablero_final
-    datos = {"x": x, "y": y}
-
-    return datos
-
-tablero = Mapa(5,5)
-historial = Historial()
-
-for i in range(tablero.largo):
-    for j in range(tablero.ancho):
-        tablero.mapa[i][j] = Casilla()
     
-a = simular(tablero, historial,20)
+    # transformar la entrada y salida a un formato "aplanado"
+    foco_inicial = [foco_inicial_x, foco_inicial_y]
+    tablero_inicial = [val for sublist in historial.historial[0] for val in sublist]
+    tablero_final = [val for sublist in historial.historial[-1] for val in sublist]
+    viento = tablero.viento
+    tiempo = tiempo
+    # agregar a un diccionario que representa una fila
+    fila = {"foco_inicial_x": foco_inicial[0], "foco_inicial_y": foco_inicial[1],
+            "tamaño_viento": viento[0], "viento_x": viento[1], "viento_y": viento[2],
+            "tiempo": tiempo}
+    for i in range(len(tablero_inicial)):
+        fila["tablero_inicial_"+str(i)] = tablero_inicial[i]
+        fila["tablero_final_"+str(i)] = tablero_final[i]
+    return fila
 
-print(a)
+
+if "__main__" == __name__:
+
+    # simular múltiples veces y guardar los resultados
+    filas = []
+    for _ in range(100):  # simular 100 veces
+        tablero = Mapa(5,5)
+        historial = Historial()
+        for i in range(tablero.largo):
+            for j in range(tablero.ancho):
+                tablero.mapa[i][j] = Casilla()
+        fila = simular(tablero, historial, 20)
+        filas.append(fila)
+
+    # convertir a un dataframe de pandas
+    df = pd.DataFrame(filas)
+
+    # guardar a un archivo CSV
+    df.to_csv("simulacion.csv", index=False)
 
 
 # for i in range(len(a.historial)):
