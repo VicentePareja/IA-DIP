@@ -1,0 +1,4 @@
+
+
+ANCHO_MAPA = 5
+LARGO_MAPA = 5
