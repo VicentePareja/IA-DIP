@@ -12,7 +12,7 @@ import pandas as pd
 
 tx, ty = ANCHO_MAPA_MODELO, LARGO_MAPA_MODELO
 
-path_modelo = 'modelos_entrenados/modelo_entrenado1.joblib'
+path_modelo = 'modelos_entrenados/modelo_entrenado2.joblib'
 path_datos = 'simulaciones/simulacion_arbitraria.csv'
 
 # Cargar el modelo
