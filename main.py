@@ -2,7 +2,7 @@
 from simulacion import simular
 from mapa import Mapa
 from historial import Historial
-from parametros import N_SIMULACIONES, ANCHO_MAPA, LARGO_MAPA, TIEMPO_SIMULACION
+from parametros import N_SIMULACIONES, ANCHO_MAPA_SIMULAR, LARGO_MAPA_SIMULAR, TIEMPO_SIMULACION
 import pandas as pd
 import time 
 
@@ -19,7 +19,7 @@ if "__main__" == __name__:
         except ZeroDivisionError:
             pass
 
-        tablero = Mapa(ANCHO_MAPA, LARGO_MAPA)
+        tablero = Mapa(ANCHO_MAPA_SIMULAR, LARGO_MAPA_SIMULAR)
         historial = Historial()
 
         filas_simulacion = simular(tablero, historial, TIEMPO_SIMULACION)
