@@ -7,13 +7,17 @@ import pandas as pd
 import time 
 
 if "__main__" == __name__:
+    path = "simulaciones/simulacion_arbitraria.csv"
 
     filas = []
     inicio = time.time()
     for _ in range(N_SIMULACIONES):  # simular n veces
        
-        if _ % (N_SIMULACIONES//10) == 0:
-            print("Simulación número", _)
+        try:
+            if _ % (N_SIMULACIONES//10) == 0:
+                print("Simulación número", _)
+        except ZeroDivisionError:
+            pass
 
         tablero = Mapa(ANCHO_MAPA, LARGO_MAPA)
         historial = Historial()
@@ -24,10 +28,10 @@ if "__main__" == __name__:
     print("Tiempo de simulación:", fin_simulaciones - inicio)
     df = pd.DataFrame(filas)
     print("dataframe creado")
-    df.to_csv("simulaciones/simulacion16.csv", index=False)
+    df.to_csv(path, index=False)
     fin = time.time()
 
-    print("Simulaciones guardadas en simulaciones/simulacion16.csv")    
+    print(f"Simulaciones guardadas en: {path}")    
     print("Tiempo de simulación:", fin_simulaciones - inicio)
     print("Tiempo total:", fin - inicio)
 

@@ -6,8 +6,21 @@ from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
 import numpy as np
 import pandas as pd
 
+def printear_mapa(mapa, n, m, alpha=500):
+    for i in range(n):
+        for j in range(m):
+            if mapa[i, j] - 1000 >= -alpha:
+                print("🔥", end=" ")
+            elif mapa[i, j] < alpha:
+                print("🌲", end=" ")
+            else:
+                print(int(mapa[i, j]), end=" ")
+        print()
+    print("\n")
+
+
 # Leer el archivo CSV
-dataframe = pd.read_csv('simulaciones/simulacion12.csv')
+dataframe = pd.read_csv('simulaciones/simulacion_arbitraria.csv')
 
 # Crear la lista de nombres de las columnas de salida
 output_columns = ['tablero_final_' + str(i) for i in range(225)]
@@ -34,14 +47,12 @@ model.fit(X_train, Y_train)
 # Predecir los valores de prueba
 Y_pred = model.predict(X_test)
 
-# Predecir los valores de prueba
-Y_pred = model.predict(X_test)
-
 # Selecciona un caso de prueba particular (por ejemplo, el primer caso)
 index = 0
-print("Características de entrada:", X_test[index])
-print("Valor real:", Y_test[index])
-print("Valor predicho:", Y_pred[index])
+
+printear_mapa(X_test[index][6:].reshape(15, 15), 15, 15)
+printear_mapa(Y_test[index].reshape(15, 15), 15, 15)
+printear_mapa(Y_pred[index].reshape(15, 15), 15, 15)
 
 # Calcular métricas de rendimiento
 mse = mean_squared_error(Y_test, Y_pred)
