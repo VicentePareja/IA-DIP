@@ -6,6 +6,7 @@ from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
 from parametros import ANCHO_MAPA_MODELO, LARGO_MAPA_MODELO
 from funciones_auxiliares import printear_mapa, printear_un_ejemplo
 from joblib import dump, load
+from random import randint
 import numpy as np
 import pandas as pd
 
@@ -27,11 +28,14 @@ output_columns = ['tablero_final_' + str(i) for i in range(tx*ty)]
 X = dataframe.drop(output_columns, axis=1).values
 Y = dataframe[output_columns].values
 
+# Normalizar los datos
+scaler = StandardScaler()
+X_normalizado = scaler.fit_transform(X)
+
 # Evaluar el modelo en un ejemplo
-Y_pred = model.predict(X[:2])
+Y_pred = model.predict(X_normalizado)
 
-print(len(X[:2]), len(Y[:2]), len(Y_pred[:2]))  
 
-for i in range(2):
+for i in range(10):
     # Imprimir un ejemplo
-    printear_un_ejemplo(X[:2], Y[:2], Y_pred[:2], (tx, ty), index=i)
+    printear_un_ejemplo(X, Y, Y_pred, (tx, ty), index = randint(0, len(X) - 1))
