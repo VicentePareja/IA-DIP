@@ -78,25 +78,32 @@ def simular(tablero, historial, tiempo):
     tablero.viento = viento
     tablero.actualizar()
     historial.agregar(tablero)
+
+    filas = []  # Inicia una lista vacía para almacenar las filas
+
     for t in range(1, tiempo):
         tablero.quemar()
         tablero.actualizar()
         historial.agregar(tablero)
-    
-    # transformar la entrada y salida a un formato "aplanado"
-    foco_inicial = [foco_inicial_x, foco_inicial_y]
-    tablero_inicial = [val for sublist in historial.historial[0] for val in sublist]
-    tablero_final = [val for sublist in historial.historial[-1] for val in sublist]
-    viento = tablero.viento
-    tiempo = tiempo
-    # agregar a un diccionario que representa una fila
-    fila = {"foco_inicial_x": foco_inicial[0], "foco_inicial_y": foco_inicial[1],
-            "tamaño_viento": viento[0], "viento_x": viento[1], "viento_y": viento[2],
-            "tiempo": tiempo}
-    for i in range(len(tablero_inicial)):
-        fila["tablero_inicial_"+str(i)] = tablero_inicial[i]
-        fila["tablero_final_"+str(i)] = tablero_final[i]
-    return fila
+
+        # transformar la entrada y salida a un formato "aplanado"
+        foco_inicial = [foco_inicial_x, foco_inicial_y]
+        tablero_inicial = [val for sublist in historial.historial[0] for val in sublist]
+        tablero_final = [val for sublist in historial.historial[-1] for val in sublist]
+        viento = tablero.viento
+        tiempo = t
+
+        # agregar a un diccionario que representa una fila
+        fila = {"foco_inicial_x": foco_inicial[0], "foco_inicial_y": foco_inicial[1],
+                "tamaño_viento": viento[0], "viento_x": viento[1], "viento_y": viento[2],
+                "tiempo": tiempo}
+        for i in range(len(tablero_inicial)):
+            fila["tablero_inicial_"+str(i)] = tablero_inicial[i]
+            fila["tablero_final_"+str(i)] = tablero_final[i]
+        
+        filas.append(fila)  # Agrega la fila a la lista de filas
+
+    return filas
 
 
 if "__main__" == __name__:
@@ -106,8 +113,9 @@ if "__main__" == __name__:
         tablero = Mapa(p.ANCHO_MAPA, p.LARGO_MAPA)
         historial = Historial()
 
-        fila = simular(tablero, historial, p.TIEMPO_SIMULACION)
-        filas.append(fila)
+        filas_simulacion = simular(tablero, historial, p.TIEMPO_SIMULACION)
+        filas.extend(filas_simulacion)  # Agrega todas las filas de esta simulación a la lista principal de filas
 
     df = pd.DataFrame(filas)
-    df.to_csv("simulacion3.csv", index=False)
+    df.to_csv("simulaciones/simulacion7.csv", index=False)
+
