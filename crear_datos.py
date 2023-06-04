@@ -1,16 +1,20 @@
 # main.py
-from simulacion import simular
+from simulacion import simular, simular_foco
 from mapa import Mapa
 from historial import Historial
 from parametros import N_SIMULACIONES, ANCHO_MAPA_SIMULAR, LARGO_MAPA_SIMULAR, TIEMPO_SIMULACION
 import pandas as pd
 import time 
 
-if "__main__" == __name__:
-    path = "simulaciones/simulacion_arbitraria.csv"
+focos_aleatorios = False
+path = "simulaciones/simulacion_arbitraria.csv"
 
+if "__main__" == __name__:
+    
     filas = []
     inicio = time.time()
+    foco_actual_x = 0
+    foco_actual_y = 0
     for _ in range(N_SIMULACIONES):  # simular n veces
        
         try:
@@ -22,8 +26,20 @@ if "__main__" == __name__:
         tablero = Mapa(ANCHO_MAPA_SIMULAR, LARGO_MAPA_SIMULAR)
         historial = Historial()
 
-        filas_simulacion = simular(tablero, historial, TIEMPO_SIMULACION)
-        filas.extend(filas_simulacion)  # Agrega todas las filas de esta simulación a la lista principal de filas
+        if focos_aleatorios:
+
+            filas_simulacion = simular(tablero, historial, TIEMPO_SIMULACION)
+            filas.extend(filas_simulacion)  # Agrega todas las filas de esta simulación a la lista principal de filas
+
+        else: # Datos homogéneos
+
+            foco_actual_x = (foco_actual_x + 1) % ANCHO_MAPA_SIMULAR
+            if foco_actual_x == 0:
+                foco_actual_y = (foco_actual_y + 1) % LARGO_MAPA_SIMULAR
+
+            filas_simulacion = simular_foco(tablero, historial, TIEMPO_SIMULACION, foco_actual_x, foco_actual_y)
+            filas.extend(filas_simulacion)
+
     fin_simulaciones = time.time()
     print("Tiempo de simulación:", fin_simulaciones - inicio)
     df = pd.DataFrame(filas)
