@@ -2,8 +2,8 @@
 import random
 import numpy as np
 import pandas as pd
-from mapa import Mapa
-from historial import Historial
+from recursos.mapa import Mapa
+from recursos.historial import Historial
 
 def simular(tablero, historial, tiempo):
     foco_inicial_x = random.randint(0, tablero.ancho-1)

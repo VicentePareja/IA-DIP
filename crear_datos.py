@@ -1,13 +1,13 @@
 # main.py
-from simulacion import simular, simular_foco
-from mapa import Mapa
-from historial import Historial
-from parametros import N_SIMULACIONES, ANCHO_MAPA_SIMULAR, LARGO_MAPA_SIMULAR, TIEMPO_SIMULACION
+from recursos.simulacion import simular, simular_foco
+from recursos.mapa import Mapa
+from recursos.historial import Historial
+from parametros import (N_SIMULACIONES, ANCHO_MAPA_SIMULAR, LARGO_MAPA_SIMULAR, TIEMPO_SIMULACION
+                        , PATH_ALMACENAR_DATOS, focos_aleatorios)
 import pandas as pd
 import time 
 
-focos_aleatorios = False
-path = "simulaciones/simulacion_arbitraria.csv"
+path = PATH_ALMACENAR_DATOS
 
 if "__main__" == __name__:
     

@@ -3,8 +3,9 @@ from sklearn.neural_network import MLPRegressor
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
-from parametros import ANCHO_MAPA_ENTRENAR, LARGO_MAPA_ENTRENAR
-from funciones_auxiliares import printear_mapa, printear_un_ejemplo
+from parametros import (ANCHO_MAPA_ENTRENAR, LARGO_MAPA_ENTRENAR, PATH_ALMACENAR_MODELO
+                        , PATH_CARGAR_DATOS, PATH_CARGAR_MODELO)
+from recursos.funciones_auxiliares import printear_mapa, printear_un_ejemplo
 from joblib import dump, load
 import numpy as np
 import pandas as pd
@@ -13,7 +14,7 @@ tx, ty = ANCHO_MAPA_ENTRENAR, LARGO_MAPA_ENTRENAR
 
 
 # Leer el archivo CSV
-dataframe = pd.read_csv('simulaciones/simulacion_arbitraria.csv')
+dataframe = pd.read_csv(PATH_CARGAR_DATOS)
 
 # Crear la lista de nombres de las columnas de salida
 output_columns = ['tablero_final_' + str(i) for i in range(tx*ty)]
@@ -39,7 +40,7 @@ model = MLPRegressor(hidden_layer_sizes=(50, 50), max_iter=50000, random_state=4
 model.fit(X_train, Y_train)
 
 # Guardar el modelo
-dump(model, 'modelos_entrenados/modelo_entrenado1.joblib')
+dump(model, PATH_ALMACENAR_MODELO)
 
 # Predecir los valores de prueba
 Y_pred = model.predict(X_test)
@@ -60,14 +61,4 @@ print("MSE:", mse)
 print("RMSE:", rmse)
 print("MAE:", mae)
 print("R^2:", r2)
-
-# comprar con datos guardados
-loaded_model = load('modelos_entrenados/modelo_entrenado1.joblib')
-Y_pred2 = loaded_model.predict(X_test)
-
-# Printear n casos para ver cómo se comporta el modelo
-n = 2
-
-for i in range(n):
-    printear_un_ejemplo(X_test_original, Y_test, Y_pred2, (tx, ty), index=i)
 
