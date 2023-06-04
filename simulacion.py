@@ -8,7 +8,7 @@ from historial import Historial
 def simular(tablero, historial, tiempo):
     foco_inicial_x = random.randint(0, tablero.ancho-1)
     foco_inicial_y = random.randint(0, tablero.largo-1)
-    tablero.mapa[foco_inicial_y][foco_inicial_x].cambiar_estado(True)
+    tablero.mapa[foco_inicial_y, foco_inicial_x].cambiar_estado(True)
     viento = [random.randint(0,3)] + random.sample([-1, -1, -1, -1, 0, 1, 1, 1, 1], 2)
     tablero.viento = viento
     tablero.actualizar()
@@ -41,23 +41,19 @@ def simular(tablero, historial, tiempo):
     return filas
 
 if __name__ == "__main__":
+    tiempo = 24 
+    tamaño_x = 15
+    tamaño_y = 15
+
     # Crear una instancia de Mapa y Historial
-    tablero = Mapa(5, 5)
+    tablero = Mapa(tamaño_x, tamaño_y)
     historial = Historial()
 
     # Realizar la simulación
-    resultado = simular(tablero, historial, 20)
+    resultado = simular(tablero, historial, tiempo)
+    # imprimir mapas
 
-    # Imprimir el resultado de cada fila
-    for i, fila in enumerate(resultado):
-        print(f"--- Resultado de la simulación {i+1} ---")
-        print(f"Foco inicial: ({fila['foco_inicial_x']}, {fila['foco_inicial_y']})")
-        print(f"Tamaño del viento: {fila['tamaño_viento']}")
-        print(f"Dirección del viento: ({fila['viento_x']}, {fila['viento_y']})")
-        print(f"Tiempo: {fila['tiempo']}")
+    historial.imprimir()
 
-        # Imprimir el tablero para cada tiempo
-        for j in range(tablero.ancho * tablero.largo):
-            print(f"Tiempo {i+1}:")
-            print(np.array([fila['tablero_inicial_'+str(i)] for i in range(tablero.ancho * tablero.largo)]).reshape(tablero.ancho, tablero.largo))
-        print("\n")
+    # Imprimir viento inicial
+    print("Viento inicial: ", tablero.viento)

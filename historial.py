@@ -15,3 +15,11 @@ class Historial:
                 else:
                     aux[i, j] = int(mapa.mapa[i, j].prob*100)
         self.historial.append(aux)
+
+    def imprimir(self):
+        for i in range(len(self.historial)):
+            matriz = np.array(self.historial[i])
+
+            np.savetxt("matriz_bonita.txt", matriz, fmt="%4d")
+            with open("matriz_bonita.txt", "r") as file:
+                print(file.read())
