@@ -1,4 +1,9 @@
+# parametros.py
 
-
+# mapa
 ANCHO_MAPA = 5
 LARGO_MAPA = 5
+
+# Entrenar
+N_SIMULACIONES = 10000
+TIEMPO_SIMULACION = 10

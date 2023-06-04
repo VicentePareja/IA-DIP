@@ -1,3 +1,4 @@
+#Modelo.py
 import numpy as np
 import pandas as pd
 import random
@@ -101,11 +102,11 @@ def simular(tablero, historial, tiempo):
 if "__main__" == __name__:
 
     filas = []
-    for _ in range(100):  # simular 100 veces
-        tablero = Mapa(p.ANCHO_MAPA,p.LARGO_MAPA)
+    for _ in range(p.N_SIMULACIONES):  # simular 100 veces
+        tablero = Mapa(p.ANCHO_MAPA, p.LARGO_MAPA)
         historial = Historial()
 
-        fila = simular(tablero, historial, 20)
+        fila = simular(tablero, historial, p.TIEMPO_SIMULACION)
         filas.append(fila)
 
     df = pd.DataFrame(filas)
