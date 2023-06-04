@@ -7,10 +7,10 @@ import numpy as np
 import pandas as pd
 
 # Leer el archivo CSV
-dataframe = pd.read_csv('simulaciones/simulacion13.csv')
+dataframe = pd.read_csv('simulaciones/simulacion12.csv')
 
 # Crear la lista de nombres de las columnas de salida
-output_columns = ['tablero_final_' + str(i) for i in range(15*15)]
+output_columns = ['tablero_final_' + str(i) for i in range(225)]
 
 # Separar las columnas de entrada y salida
 X = dataframe.drop(output_columns, axis=1).values
@@ -18,6 +18,7 @@ Y = dataframe[output_columns].values
 
 # Dividir los datos en entrenamiento y prueba
 X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.2, random_state=42)
+
 
 # Normalizar los datos
 scaler = StandardScaler()
