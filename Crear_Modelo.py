@@ -1,39 +1,15 @@
-# Predictor.py
+# Crear_Modelo.py
 from sklearn.neural_network import MLPRegressor
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
 from parametros import ANCHO_MAPA_ENTRENAR, LARGO_MAPA_ENTRENAR
+from funciones_auxiliares import printear_mapa, printear_un_ejemplo
+from joblib import dump, load
 import numpy as np
 import pandas as pd
 
 tx, ty = ANCHO_MAPA_ENTRENAR, LARGO_MAPA_ENTRENAR
-
-
-
-def printear_mapa(mapa, n, m, alpha=500):
-    for i in range(n):
-        for j in range(m):
-            if mapa[i, j] - 1000 >= -alpha:
-                print("🔥", end=" ")
-            elif mapa[i, j] < alpha:
-                print("🌲", end=" ")
-            else:
-                print(int(mapa[i, j]), end=" ")
-        print()
-    print("\n")
-
-
-def printear_un_ejemplo(index=0):
-
-    print("Condiciones iniciales:")
-    print(f"Viento: {X_test_original[index][2:5]}, Tiempo transcurrido: {X_test_original[index][5]}\n")
-    print("Mapa Inicial:\n")
-    printear_mapa(X_test_original[index][6:].reshape(tx, ty), tx, ty)
-    print("Mapa Final:\n")
-    printear_mapa(Y_test[index].reshape(tx, ty), tx, ty)
-    print("Mapa Predicho:\n")
-    printear_mapa(Y_pred[index].reshape(tx, ty), tx, ty)
 
 
 # Leer el archivo CSV
@@ -62,12 +38,17 @@ model = MLPRegressor(hidden_layer_sizes=(50, 50), max_iter=50000, random_state=4
 # Entrenar el modelo
 model.fit(X_train, Y_train)
 
+# Guardar el modelo
+dump(model, 'modelos_entrenados/modelo_entrenado1.joblib')
+
 # Predecir los valores de prueba
 Y_pred = model.predict(X_test)
 
-# Printear 10 casos para ver cómo se comporta el modelo
-for i in range(10):
-    printear_un_ejemplo(i)
+# Printear n casos para ver cómo se comporta el modelo
+n = 2
+
+for i in range(n):
+    printear_un_ejemplo(X_test_original, Y_test, Y_pred, (tx, ty), index=i)
 
 # Calcular métricas de rendimiento
 mse = mean_squared_error(Y_test, Y_pred)
@@ -80,4 +61,13 @@ print("RMSE:", rmse)
 print("MAE:", mae)
 print("R^2:", r2)
 
+# comprar con datos guardados
+loaded_model = load('modelos_entrenados/modelo_entrenado1.joblib')
+Y_pred2 = loaded_model.predict(X_test)
+
+# Printear n casos para ver cómo se comporta el modelo
+n = 2
+
+for i in range(n):
+    printear_un_ejemplo(X_test_original, Y_test, Y_pred2, (tx, ty), index=i)
 
