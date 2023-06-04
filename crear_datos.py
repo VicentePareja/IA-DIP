@@ -1,54 +1,67 @@
-# main.py
+# crear_datos.py
 from recursos.simulacion import simular, simular_foco
 from recursos.mapa import Mapa
 from recursos.historial import Historial
-from parametros import (N_SIMULACIONES, ANCHO_MAPA_SIMULAR, LARGO_MAPA_SIMULAR, TIEMPO_SIMULACION
-                        , PATH_ALMACENAR_DATOS, focos_aleatorios)
+from parametros import (N_SIMULACIONES, ANCHO_MAPA_SIMULAR, LARGO_MAPA_SIMULAR, TIEMPO_SIMULACION,
+                        PATH_ALMACENAR_DATOS, FOCOS_ALEATORIOS)
 import pandas as pd
-import time 
+import time
+import logging
+from tqdm import tqdm
 
-path = PATH_ALMACENAR_DATOS
+logging.basicConfig(level=logging.INFO)
 
-if "__main__" == __name__:
-    
+
+def ejecutar_simulacion():
+    """
+    Ejecuta N_SIMULACIONES simulaciones y recoge los resultados en una lista de filas.
+    Devuelve la lista de filas recogida.
+    """
     filas = []
-    inicio = time.time()
     foco_actual_x = 0
     foco_actual_y = 0
-    for _ in range(N_SIMULACIONES):  # simular n veces
-       
+
+    # Ejecuta N_SIMULACIONES simulaciones
+    for simulacion_num in tqdm(range(N_SIMULACIONES), desc="Progreso de la simulación"):
         try:
-            if _ % (N_SIMULACIONES//10) == 0:
-                print("Simulación número", _)
-        except ZeroDivisionError:
-            pass
+            
+            tablero = Mapa(ANCHO_MAPA_SIMULAR, LARGO_MAPA_SIMULAR)
+            historial = Historial()
 
-        tablero = Mapa(ANCHO_MAPA_SIMULAR, LARGO_MAPA_SIMULAR)
-        historial = Historial()
+            # Decide si la simulación es aleatoria o homogénea basándose en FOCOS_ALEATORIOS
+            if FOCOS_ALEATORIOS:
+                filas.extend(simular(tablero, historial, TIEMPO_SIMULACION))
+            else:  # Datos homogéneos
+                foco_actual_x = (foco_actual_x + 1) % ANCHO_MAPA_SIMULAR
+                if foco_actual_x == 0:
+                    foco_actual_y = (foco_actual_y + 1) % LARGO_MAPA_SIMULAR
 
-        if focos_aleatorios:
+                filas.extend(simular_foco(tablero, historial, TIEMPO_SIMULACION, foco_actual_x, foco_actual_y))
+        except Exception as e:
+            logging.error(f"Error durante la simulación número {simulacion_num}: {e}")
 
-            filas_simulacion = simular(tablero, historial, TIEMPO_SIMULACION)
-            filas.extend(filas_simulacion)  # Agrega todas las filas de esta simulación a la lista principal de filas
+    return filas
 
-        else: # Datos homogéneos
 
-            foco_actual_x = (foco_actual_x + 1) % ANCHO_MAPA_SIMULAR
-            if foco_actual_x == 0:
-                foco_actual_y = (foco_actual_y + 1) % LARGO_MAPA_SIMULAR
+if __name__ == "__main__": 
+    inicio = time.time()
 
-            filas_simulacion = simular_foco(tablero, historial, TIEMPO_SIMULACION, foco_actual_x, foco_actual_y)
-            filas.extend(filas_simulacion)
+    try:
+        filas = ejecutar_simulacion()
+        fin_simulacion = time.time()
 
-    fin_simulaciones = time.time()
-    print("Tiempo de simulación:", fin_simulaciones - inicio)
-    df = pd.DataFrame(filas)
-    print("dataframe creado")
-    df.to_csv(path, index=False)
+        logging.info("Creando dataframe...")
+        df = pd.DataFrame(filas)
+        logging.info("Dataframe creado\n")
+
+        df.to_csv(PATH_ALMACENAR_DATOS, index=False)
+        fin_almenamiento = time.time()
+        logging.info(f"Simulaciones guardadas en: {PATH_ALMACENAR_DATOS}\n")
+    except Exception as e:
+        logging.error(f"Error durante el procesamiento de los datos: {e}")
+
     fin = time.time()
-
-    print(f"Simulaciones guardadas en: {path}")    
-    print("Tiempo de simulación:", fin_simulaciones - inicio)
-    print("Tiempo total:", fin - inicio)
-
+    logging.info(f"Tiempo de simulación: {fin_simulacion - inicio:.2f} segundos")
+    logging.info(f"Tiempo de almacenamiento: {fin_almenamiento - fin_simulacion:.2f} segundos")
+    logging.info(f"Tiempo total: {fin - inicio:.2f} segundos")
 

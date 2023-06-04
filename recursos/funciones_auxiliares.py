@@ -1,6 +1,7 @@
 # funciones_auxiliares.py
+from parametros import ALPHA
 
-def printear_mapa(mapa, n, m, alpha=500):
+def printear_mapa(mapa, n, m, alpha=ALPHA):
     
     for i in range(n):
         for j in range(m):

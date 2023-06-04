@@ -1,4 +1,4 @@
-# Predictor_Incendios.py
+# predictor_incendios.py
 
 from sklearn.neural_network import MLPRegressor
 from sklearn.preprocessing import StandardScaler
