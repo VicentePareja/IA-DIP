@@ -38,3 +38,4 @@ SIZE_IMAGENES = (300, 300)
 PATH_IMAGENES_CSV = 'imagenes/nuevas imágenes/imágenes.csv'
 PATH_CARGAR_IMAGENES = 'imagenes/imágenes satelitales'
 PATH_ALMACENAR_RESULTADOS = 'imagenes/Resultados predicciones'
+PATH_IMAGENES_FUSIONADAS = 'imagenes/Resultados fusionados'

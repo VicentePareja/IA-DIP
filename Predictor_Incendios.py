@@ -44,9 +44,10 @@ X_normalizado = scaler.fit_transform(X)
 Y_pred = model.predict(X_normalizado)
 
 if IMAGENES:
-    for i in range(2):
+    for i in range(13):
         # Imprimir un ejemplo
         index = randint(0, len(X) - 1)
+        index = i+1
         printear_un_ejemplo_imagen(X, Y, Y_pred, (tx, ty), index=index)
 
 else:
