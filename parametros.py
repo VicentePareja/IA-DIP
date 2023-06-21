@@ -1,30 +1,36 @@
 # parametros.py
 
 # Generar datos
-N_SIMULACIONES = 10
-ANCHO_MAPA_SIMULAR = 15
-LARGO_MAPA_SIMULAR = 15
+N_SIMULACIONES = 5
+ANCHO_MAPA_CREAR = 90
+LARGO_MAPA_CREAR = 90
 PROB_RADIACION = 12
 PROB_VIENTO = 5
 
 FOCOS_ALEATORIOS = False
 
 # Entrenar un modelo
-TIEMPO_SIMULACION = 24
-ANCHO_MAPA_ENTRENAR = 15
-LARGO_MAPA_ENTRENAR = 15
+TIEMPO_SIMULACION = 15
+ANCHO_MAPA_ENTRENAR = 90
+LARGO_MAPA_ENTRENAR = 90
+N_NEURONAS = 100
+PRINT_EJEMPLOS = False
 
 
 # Predecir con un modelo
 
-ANCHO_MAPA_MODELO = 15
-LARGO_MAPA_MODELO = 15
+ANCHO_MAPA_MODELO = 90
+LARGO_MAPA_MODELO = 90
+
+
 
 # paths
-PATH_CARGAR_DATOS = 'simulaciones_homogéneas/simulacion_homogenea3.csv'
-PATH_CARGAR_MODELO = 'modelos_entrenados/modelo_entrenado5.joblib'
-PATH_ALMACENAR_MODELO = 'modelos_entrenados/modelo_entrenado5.joblib'
-PATH_ALMACENAR_DATOS = 'simulaciones_homogéneas/simulacion_homogenea3.csv'
+PATH_CARGAR_DATOS = 'nuevas imágenes/imágenes.csv'
+PATH_CARGAR_MODELO = 'modelos_entrenados/modelo_entrenado102.joblib'
+PATH_ALMACENAR_MODELO = 'modelos_entrenados/modelo_entrenado102.joblib'
+PATH_ALMACENAR_DATOS = 'simulaciones_homogéneas/simulacion_homogenea6.csv'
 
 # visualización
 ALPHA = 500
+IMAGENES = True
+SIZE_IMAGENES = (300, 300)

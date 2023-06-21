@@ -12,6 +12,8 @@ La simulación representa un bosque como una cuadrícula 2D. Cada celda en esta 
 
 El módulo de predicción emplea un Regresor de Perceptrón Multicapa (MLP) de la biblioteca sklearn. El modelo predice el estado final del bosque dado las condiciones iniciales y los datos del viento, y se entrena con datos generados por el simulador.
 
+Ahora también se incluye la capacidad de visualizar las predicciones del modelo como imágenes, lo que ayuda a entender mejor los resultados de la predicción.
+
 ## Comenzando
 
 ### Dependencias
@@ -22,11 +24,12 @@ Este proyecto requiere Python 3.8 o una versión más reciente. Además, depende
 - Pandas
 - sklearn
 - joblib
+- matplotlib
 
 Estas bibliotecas se pueden instalar usando pip:
 
 \```shell
-pip install numpy pandas sklearn joblib
+pip install numpy pandas sklearn joblib matplotlib
 \```
 
 ## Instalación
@@ -34,7 +37,7 @@ pip install numpy pandas sklearn joblib
 Clone el proyecto en su máquina local:
 
 \```shell
-git clone https://github.com/yourusername/IA-DIP.git
+git clone https://github.com/VicentePareja/IA-DIP.git
 \```
 
 ## Uso
@@ -67,4 +70,4 @@ Las contribuciones, problemas y solicitudes de funciones son bienvenidas. Para c
 
 ## Licencia
 
-Tenga en cuenta que este proyecto está licenciado bajo la licencia MIT, y todo el código contribuido también estará licenciado bajo MIT. Para obtener más información, consulte el archivo LICENSE.
+Tenga en cuenta que este proyecto está licenciado bajo la licencia PUC, y todo el código contribuido también estará licenciado bajo PUC. Para obtener más información, consulte el archivo LICENSE.
