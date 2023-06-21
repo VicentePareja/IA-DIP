@@ -53,12 +53,27 @@ def mostrar_imagen(imagen, titulo, ancho, largo):
     plt.show(block=False)  # Muestra la imagen sin bloquear el resto del código
 
 
+def guardar_subimagen(fig, ax, titulo, index):
+    """
+    Guarda una subimagen específica de una figura.
+
+    Parámetros:
+    fig -- la figura que contiene el subgráfico
+    ax -- el subgráfico a guardar
+    titulo -- título de la subimagen
+    index -- índice del ejemplo
+    """
+    # Crea los bordes de la subimagen
+    extent = ax.get_window_extent().transformed(fig.dpi_scale_trans.inverted())
+
+    # Guarda la subimagen
+    fig.savefig(PATH_ALMACENAR_RESULTADOS + f'/imagen_{titulo}_{index}.jpg',
+                bbox_inches=extent.expanded(1.2, 1.2))
+
+
 def printear_un_ejemplo_imagen(X_train, Y_test, Y_pred, shape, index=0):
+
     print("Ejemplo", index)
-
-    # Crea una figura y un conjunto de subtramas
-    fig, axs = plt.subplots(1, 3)
-
     tiempo = X_train[index][0]
     print(f"Tiempo: {tiempo}")
 
@@ -66,6 +81,9 @@ def printear_un_ejemplo_imagen(X_train, Y_test, Y_pred, shape, index=0):
     inicial = X_train[index][1:].reshape(*shape)
     real = Y_test[index].reshape(*shape)
     pred = Y_pred[index].reshape(*shape)
+
+    # Crea una figura y un conjunto de subtramas
+    fig, axs = plt.subplots(1, 3)
 
     # Muestra las imágenes
     axs[0].imshow(inicial, cmap='hot')
@@ -79,8 +97,10 @@ def printear_un_ejemplo_imagen(X_train, Y_test, Y_pred, shape, index=0):
         ax.set_xticks([])
         ax.set_yticks([])
 
-    # Guarda la figura antes de mostrarla
-    plt.savefig(PATH_ALMACENAR_RESULTADOS + f'/imagen_ejemplo_{index}.jpg')
+    # Guarda cada subimagen
+    guardar_subimagen(fig, axs[0], "inicial", index)
+    guardar_subimagen(fig, axs[1], "real", index)
+    guardar_subimagen(fig, axs[2], "prediccion", index)
 
     # Muestra la figura con todas las imágenes
     plt.show()
