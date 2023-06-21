@@ -22,8 +22,6 @@ PRINT_EJEMPLOS = False
 ANCHO_MAPA_MODELO = 90
 LARGO_MAPA_MODELO = 90
 
-
-
 # paths
 PATH_CARGAR_DATOS = 'nuevas imágenes/imágenes.csv'
 PATH_CARGAR_MODELO = 'modelos_entrenados/modelo_entrenado102.joblib'

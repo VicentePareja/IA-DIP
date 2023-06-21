@@ -4,6 +4,7 @@ import numpy as np
 import os
 import csv
 
+
 def get_red_pixels(img, threshold=100):
     # Crea una nueva matriz del mismo tamaño que la imagen original pero llena de ceros
     new_img = np.zeros((img.shape[0], img.shape[1]), dtype=np.uint8)
@@ -11,12 +12,14 @@ def get_red_pixels(img, threshold=100):
     # Recorre cada pixel de la imagen
     for i in range(img.shape[0]):
         for j in range(img.shape[1]):
-            # Si el pixel es "rojo" según el umbral definido, cambia el valor correspondiente en la nueva matriz a 1
+            # Si el pixel es "rojo" según el umbral definido, cambia el valor correspondiente
+            # en la nueva matriz a 1
             if img[i, j, 0] - max(img[i, j, 1], img[i, j, 2]) > threshold:
                 new_img[i, j] = 1  # rojo se convierte en 1
             else:
                 new_img[i, j] = 0  # no rojo se convierte en 0
     return new_img
+
 
 def process_folder(folder_path, standard_size=(ANCHO_MAPA_CREAR, LARGO_MAPA_CREAR), threshold=100):
     # Abre la imagen inicial
@@ -64,26 +67,30 @@ def process_folder(folder_path, standard_size=(ANCHO_MAPA_CREAR, LARGO_MAPA_CREA
             new_np_im_inicial = new_np_im
             flattened_np_im_inicial = flattened_np_im
 
+
 def create_columns():
     # Define los nombres de las columnas
     standard_size = (ANCHO_MAPA_CREAR, LARGO_MAPA_CREAR)  # Ajusta esto al tamaño que prefieras
-    columns = ['tiempo'] + [f'tablero_inicial_{i - 1}' for i in range(1, standard_size[0]*standard_size[1] + 1)] \
-            + [f'tablero_final_{i - 1}' for i in range(1, standard_size[0]*standard_size[1] + 1)]
+    columns = ['tiempo'] + \
+        [f'tablero_inicial_{i - 1}' for i in range(1, standard_size[0]*standard_size[1] + 1)] \
+        + [f'tablero_final_{i - 1}' for i in range(1, standard_size[0]*standard_size[1] + 1)]
 
     # Crea un archivo .csv y escribe los nombres de las columnas
     with open('nuevas imágenes/imágenes.csv', 'w', newline='') as f:
         writer = csv.writer(f)
         writer.writerow(columns)
 
+
 def create_data(carpeta_inicial=1, carpeta_final=None):
 
     if carpeta_final is None:
         carpeta_final = carpeta_inicial
-    
+
     # Recorre cada carpeta
     for i in range(carpeta_inicial, carpeta_final + 1):
         folder_path = 'imágenes satelitales/incendio ' + str(i)
         process_folder(folder_path)
+
 
 if '__main__' == __name__:
 
@@ -91,4 +98,4 @@ if '__main__' == __name__:
     create_columns()
 
     # Crea los datos
-    create_data(1,4)
+    create_data(1, 5)

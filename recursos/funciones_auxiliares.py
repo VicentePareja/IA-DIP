@@ -5,7 +5,7 @@ import threading
 
 
 def printear_mapa(mapa, n, m, alpha=ALPHA):
-    
+
     for i in range(n):
         for j in range(m):
             if mapa[i, j] - 1000 >= -alpha:
@@ -44,7 +44,7 @@ def mostrar_imagen(imagen, titulo, ancho, largo):
     """
     # Redimensiona la matriz 1D a una matriz 2D
     imagen = imagen.reshape((ancho, largo))
-    
+
     # Muestra la imagen
     plt.figure()  # Crea una nueva figura
     plt.imshow(imagen, cmap='hot')
@@ -55,7 +55,7 @@ def mostrar_imagen(imagen, titulo, ancho, largo):
 
 def printear_un_ejemplo_imagen(X_train, Y_test, Y_pred, shape, index=0):
     print("Ejemplo", index)
-    
+
     # Crea una figura y un conjunto de subtramas
     fig, axs = plt.subplots(1, 3)
 
@@ -83,7 +83,6 @@ def printear_un_ejemplo_imagen(X_train, Y_test, Y_pred, shape, index=0):
     plt.show()
 
 
-
 if __name__ == "__main__":
 
     import logging
@@ -93,7 +92,7 @@ if __name__ == "__main__":
 
     logging.info("Cargando datos desde el archivo CSV...")
     start_time = time.time()
-    
+
     try:
         dataframe = pd.read_csv(PATH_CARGAR_DATOS)
         logging.info("Datos cargados con éxito en {:.2f} segundos.".format(time.time() - start_time))
@@ -106,4 +105,3 @@ if __name__ == "__main__":
 
     except FileNotFoundError:
         logging.error("No se pudo abrir el archivo CSV.")
-

@@ -18,7 +18,7 @@ logging.basicConfig(level=logging.INFO)
 def load_data():
     logging.info("Cargando datos desde el archivo CSV...")
     start_time = time.time()
-    
+
     try:
         dataframe = pd.read_csv(PATH_CARGAR_DATOS)
     except FileNotFoundError:
@@ -35,10 +35,11 @@ def load_data():
 def train_model(X_train, Y_train):
     logging.info("Entrenando el modelo...")
     start_time = time.time()
-    
+
     scaler = StandardScaler()
     X_train = scaler.fit_transform(X_train)
-    model = MLPRegressor(hidden_layer_sizes=(N_NEURONAS, N_NEURONAS, N_NEURONAS, N_NEURONAS), max_iter=350000, random_state=42)
+    model = MLPRegressor(hidden_layer_sizes=(N_NEURONAS, N_NEURONAS, N_NEURONAS, N_NEURONAS),
+                         max_iter=350000, random_state=42)
     model.fit(X_train, Y_train)
 
     logging.info("Modelo entrenado con éxito en {:.2f} segundos.".format(time.time() - start_time))
@@ -49,11 +50,12 @@ def train_model(X_train, Y_train):
 def evaluate_model(model, scaler, X_train, X_test, Y_test):
     logging.info("Evaluando el modelo...")
     start_time = time.time()
-    
+
     X_test = scaler.transform(X_test)
     Y_pred = model.predict(X_test)
     for i in range(2):
-        printear_un_ejemplo(X_train[6:], Y_test, Y_pred, (ANCHO_MAPA_ENTRENAR, LARGO_MAPA_ENTRENAR), index=i)
+        printear_un_ejemplo(X_train[6:], Y_test, Y_pred,
+                            (ANCHO_MAPA_ENTRENAR, LARGO_MAPA_ENTRENAR), index=i)
 
     mse = mean_squared_error(Y_test, Y_pred)
     rmse = np.sqrt(mse)
@@ -74,11 +76,8 @@ if __name__ == "__main__":
             if IMAGENES:
                 # Se crean las predicciones
                 Y_pred = model.predict(X_train)
-                printear_un_ejemplo_imagen(X_train, Y_train, Y_pred, (ANCHO_MAPA_ENTRENAR, LARGO_MAPA_ENTRENAR))
-                
+                printear_un_ejemplo_imagen(X_train, Y_train, Y_pred,
+                                           (ANCHO_MAPA_ENTRENAR, LARGO_MAPA_ENTRENAR))
+
             else:
                 evaluate_model(model, scaler, X_train, X_test, Y_test)
-    
-
-
-
