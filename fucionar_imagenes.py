@@ -25,8 +25,8 @@ for x in range(img1.width):
         r1, g1, b1, a1 = img1.getpixel((x, y))
         r2, g2, b2, a2 = img2.getpixel((x, y))
         
-        # Verifica si el color de la primera imagen es rojo o negro
-        if (r1 > 100 and g1 < 50 and b1 < 50) or (r1 == 0 and g1 == 0 and b1 == 0):
+        # Verifica si el color de la primera imagen es intenso
+        if (r1 > 50 and g1 > 50 and b1 > 50):
             final.putpixel((x, y), (r1, g1, b1, a1))
         else:
             final.putpixel((x, y), (r2, g2, b2, a2))

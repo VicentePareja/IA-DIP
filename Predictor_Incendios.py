@@ -5,7 +5,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
 from parametros import (ANCHO_MAPA_MODELO, LARGO_MAPA_MODELO, PATH_CARGAR_DATOS, PATH_CARGAR_MODELO,
                         IMAGENES)
-from recursos.funciones_auxiliares import (printear_mapa, printear_un_ejemplo,
+from recursos.visualizacion import (printear_mapa, printear_un_ejemplo,
                                            printear_un_ejemplo_imagen)
 from joblib import dump, load
 from random import randint
@@ -44,10 +44,10 @@ X_normalizado = scaler.fit_transform(X)
 Y_pred = model.predict(X_normalizado)
 
 if IMAGENES:
-    for i in range(13):
+    for i in range(5):
         # Imprimir un ejemplo
         index = randint(0, len(X) - 1)
-        index = i+1
+        index = i + 3
         printear_un_ejemplo_imagen(X, Y, Y_pred, (tx, ty), index=index)
 
 else:

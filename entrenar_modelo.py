@@ -5,7 +5,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
 from parametros import (ANCHO_MAPA_ENTRENAR, LARGO_MAPA_ENTRENAR, PATH_ALMACENAR_MODELO,
                         PATH_CARGAR_DATOS, N_NEURONAS, PRINT_EJEMPLOS, IMAGENES)
-from recursos.funciones_auxiliares import printear_un_ejemplo, printear_un_ejemplo_imagen
+from recursos.visualizacion import printear_un_ejemplo, printear_un_ejemplo_imagen
 from joblib import dump, load
 import numpy as np
 import pandas as pd

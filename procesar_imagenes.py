@@ -23,7 +23,7 @@ def get_red_pixels(img, threshold=100):
     return new_img
 
 
-def process_folder(folder_path, standard_size=(ANCHO_MAPA_CREAR, LARGO_MAPA_CREAR), threshold=100):
+def process_folder(folder_path, id_incendio, standard_size=(ANCHO_MAPA_CREAR, LARGO_MAPA_CREAR), threshold=100):
     # Abre la imagen inicial
     im_inicial = Image.open(folder_path + '/Imagen 001.jpeg')
     print(len(im_inicial.getdata()))
@@ -62,7 +62,7 @@ def process_folder(folder_path, standard_size=(ANCHO_MAPA_CREAR, LARGO_MAPA_CREA
             # Escribe los datos en el archivo .csv
             with open(PATH_IMAGENES_CSV, 'a', newline='') as f:
                 writer = csv.writer(f)
-                writer.writerow([index] + list(flattened_np_im_inicial) + list(flattened_np_im))
+                writer.writerow([id_incendio] + [index] + list(flattened_np_im_inicial) + list(flattened_np_im))
 
             # Actualiza la imagen inicial para la próxima iteración
             np_im_inicial = np_im
@@ -73,7 +73,7 @@ def process_folder(folder_path, standard_size=(ANCHO_MAPA_CREAR, LARGO_MAPA_CREA
 def create_columns():
     # Define los nombres de las columnas
     standard_size = (ANCHO_MAPA_CREAR, LARGO_MAPA_CREAR)  # Ajusta esto al tamaño que prefieras
-    columns = ['tiempo'] + \
+    columns = ['id_incendio'] + ['tiempo'] + \
         [f'tablero_inicial_{i - 1}' for i in range(1, standard_size[0]*standard_size[1] + 1)] \
         + [f'tablero_final_{i - 1}' for i in range(1, standard_size[0]*standard_size[1] + 1)]
 
@@ -91,7 +91,7 @@ def create_data(carpeta_inicial=1, carpeta_final=None):
     # Recorre cada carpeta
     for i in range(carpeta_inicial, carpeta_final + 1):
         folder_path = PATH_CARGAR_IMAGENES + '/incendio ' + str(i)
-        process_folder(folder_path)
+        process_folder(folder_path, i)
 
 
 if '__main__' == __name__:
