@@ -1,5 +1,5 @@
 # funciones_auxiliares.py
-from parametros import ALPHA
+from parametros import ALPHA, PATH_ALMACENAR_RESULTADOS
 import matplotlib.pyplot as plt
 import threading
 
@@ -78,6 +78,9 @@ def printear_un_ejemplo_imagen(X_train, Y_test, Y_pred, shape, index=0):
     for ax in axs:
         ax.set_xticks([])
         ax.set_yticks([])
+
+    # Guarda la figura antes de mostrarla
+    plt.savefig(PATH_ALMACENAR_RESULTADOS + f'/imagen_ejemplo_{index}.jpg')
 
     # Muestra la figura con todas las imágenes
     plt.show()
