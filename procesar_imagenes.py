@@ -1,5 +1,7 @@
+# procesar_imagenes.py
+
 from PIL import Image
-from parametros import ANCHO_MAPA_CREAR, LARGO_MAPA_CREAR
+from parametros import ANCHO_MAPA_CREAR, LARGO_MAPA_CREAR, PATH_IMAGENES_CSV, PATH_CARGAR_IMAGENES
 import numpy as np
 import os
 import csv
@@ -58,7 +60,7 @@ def process_folder(folder_path, standard_size=(ANCHO_MAPA_CREAR, LARGO_MAPA_CREA
             flattened_np_im = new_np_im.flatten()
 
             # Escribe los datos en el archivo .csv
-            with open('nuevas imágenes/imágenes.csv', 'a', newline='') as f:
+            with open(PATH_IMAGENES_CSV, 'a', newline='') as f:
                 writer = csv.writer(f)
                 writer.writerow([index] + list(flattened_np_im_inicial) + list(flattened_np_im))
 
@@ -76,7 +78,7 @@ def create_columns():
         + [f'tablero_final_{i - 1}' for i in range(1, standard_size[0]*standard_size[1] + 1)]
 
     # Crea un archivo .csv y escribe los nombres de las columnas
-    with open('nuevas imágenes/imágenes.csv', 'w', newline='') as f:
+    with open(PATH_IMAGENES_CSV, 'w', newline='') as f:
         writer = csv.writer(f)
         writer.writerow(columns)
 
@@ -88,7 +90,7 @@ def create_data(carpeta_inicial=1, carpeta_final=None):
 
     # Recorre cada carpeta
     for i in range(carpeta_inicial, carpeta_final + 1):
-        folder_path = 'imágenes satelitales/incendio ' + str(i)
+        folder_path = PATH_CARGAR_IMAGENES + '/incendio ' + str(i)
         process_folder(folder_path)
 
 

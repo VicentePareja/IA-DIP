@@ -1,5 +1,10 @@
 # parametros.py
 
+# Procesar Imagenes
+
+PATH_IMAGENES_CSV = 'imagenes/nuevas imágenes/imágenes.csv'
+PATH_CARGAR_IMAGENES = 'imagenes/imágenes satelitales'
+
 # Generar datos
 N_SIMULACIONES = 5
 ANCHO_MAPA_CREAR = 90
@@ -26,7 +31,7 @@ LARGO_MAPA_MODELO = 90
 PATH_CARGAR_DATOS = 'nuevas imágenes/imágenes.csv'
 PATH_CARGAR_MODELO = 'modelos_entrenados/modelo_entrenado102.joblib'
 PATH_ALMACENAR_MODELO = 'modelos_entrenados/modelo_entrenado102.joblib'
-PATH_ALMACENAR_DATOS = 'simulaciones_homogéneas/simulacion_homogenea6.csv'
+PATH_ALMACENAR_DATOS = 'simulaciones/simulaciones_homogéneas/simulacion_homogenea7.csv'
 
 # visualización
 ALPHA = 500
