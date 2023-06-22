@@ -54,7 +54,7 @@ def fusionar_imagenes(imagen1, imagen2, index, imagen_tipo="prediccion"):
         for y in range(img1.height):
             r1, g1, b1, a1 = img1.getpixel((x, y))
             r2, g2, b2, a2 = img2.getpixel((x, y))
-            
+
             # Verifica si el color de la primera imagen es intenso
             if (r1 > 50 and g1 > 50 and b1 > 50):
                 final.putpixel((x, y), (r1, g1, b1, a1))
@@ -62,7 +62,8 @@ def fusionar_imagenes(imagen1, imagen2, index, imagen_tipo="prediccion"):
                 final.putpixel((x, y), (r2, g2, b2, a2))
 
     # Guarda la imagen final
-    path_imagen_fusionada = PATH_IMAGENES_FUSIONADAS + f"/imagen_fusionada_{imagen_tipo}_{index}.jpg"
+    path_imagen_fusionada = PATH_IMAGENES_FUSIONADAS \
+        + f"/imagen_fusionada_{imagen_tipo}_{index}.jpg"
     final.convert("RGB").save(path_imagen_fusionada)
 
     return path_imagen_fusionada
@@ -86,7 +87,7 @@ def guardar_subimagen(fig, ax, titulo, index):
                 bbox_inches=extent)
 
 
-def printear_un_ejemplo_imagen(X_train, Y_test, Y_pred, shape, index=0):
+def almacenar_ejemplo_imagen(X_train, Y_test, Y_pred, shape, index=0):
 
     print("Ejemplo", index)
     id_incendio = X_train[index][0]
@@ -143,13 +144,15 @@ if __name__ == "__main__":
 
     try:
         dataframe = pd.read_csv(PATH_CARGAR_DATOS)
-        logging.info("Datos cargados con éxito en {:.2f} segundos.".format(time.time() - start_time))
-        output_columns = ['tablero_final_' + str(i) for i in range(ANCHO_MAPA_ENTRENAR*LARGO_MAPA_ENTRENAR)]
+        logging.info("Datos cargados con éxito en {:.2f} segundos.".format(time.time()
+                                                                           - start_time))
+        output_columns = ['tablero_final_'
+                          + str(i) for i in range(ANCHO_MAPA_ENTRENAR*LARGO_MAPA_ENTRENAR)]
         X = dataframe.drop(output_columns, axis=1).values
         Y = dataframe[output_columns].values
         # Print an example
         index = 0  # Change this to the index of the example you want to print
-        printear_un_ejemplo_imagen(X, Y, Y, (ANCHO_MAPA_ENTRENAR, LARGO_MAPA_ENTRENAR))
+        almacenar_ejemplo_imagen(X, Y, Y, (ANCHO_MAPA_ENTRENAR, LARGO_MAPA_ENTRENAR))
 
     except FileNotFoundError:
         logging.error("No se pudo abrir el archivo CSV.")

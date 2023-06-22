@@ -3,7 +3,7 @@
 from PIL import Image
 from parametros import (ANCHO_MAPA_CREAR, LARGO_MAPA_CREAR, PATH_IMAGENES_FUSIONADAS,
                         PATH_ALMACENAR_RESULTADOS, PATH_CARGAR_IMAGENES)
-from recursos.visualizacion import printear_un_ejemplo_imagen, fusionar_imagenes
+from recursos.visualizacion import almacenar_ejemplo_imagen, fusionar_imagenes
 
 # Abre las dos imágenes
 

@@ -1,13 +1,14 @@
 # procesar_imagenes.py
 
 from PIL import Image
-from parametros import ANCHO_MAPA_CREAR, LARGO_MAPA_CREAR, PATH_IMAGENES_CSV, PATH_CARGAR_IMAGENES
+from parametros import (ANCHO_MAPA_CREAR, LARGO_MAPA_CREAR, PATH_IMAGENES_CSV, PATH_CARGAR_IMAGENES,
+                        THRESHOLD)
 import numpy as np
 import os
 import csv
 
 
-def get_red_pixels(img, threshold=100):
+def get_red_pixels(img, threshold=THRESHOLD):
     # Crea una nueva matriz del mismo tamaño que la imagen original pero llena de ceros
     new_img = np.zeros((img.shape[0], img.shape[1]), dtype=np.uint8)
 
@@ -23,7 +24,8 @@ def get_red_pixels(img, threshold=100):
     return new_img
 
 
-def process_folder(folder_path, id_incendio, standard_size=(ANCHO_MAPA_CREAR, LARGO_MAPA_CREAR), threshold=100):
+def process_folder(folder_path, id_incendio, standard_size=(ANCHO_MAPA_CREAR, LARGO_MAPA_CREAR),
+                   threshold=THRESHOLD):
     # Abre la imagen inicial
     im_inicial = Image.open(folder_path + '/Imagen 001.jpeg')
     print(len(im_inicial.getdata()))
@@ -62,7 +64,8 @@ def process_folder(folder_path, id_incendio, standard_size=(ANCHO_MAPA_CREAR, LA
             # Escribe los datos en el archivo .csv
             with open(PATH_IMAGENES_CSV, 'a', newline='') as f:
                 writer = csv.writer(f)
-                writer.writerow([id_incendio] + [index] + list(flattened_np_im_inicial) + list(flattened_np_im))
+                writer.writerow([id_incendio] + [index]
+                                + list(flattened_np_im_inicial) + list(flattened_np_im))
 
             # Actualiza la imagen inicial para la próxima iteración
             np_im_inicial = np_im

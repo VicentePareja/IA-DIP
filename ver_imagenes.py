@@ -5,8 +5,8 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
 from parametros import (ANCHO_MAPA_MODELO, LARGO_MAPA_MODELO, PATH_CARGAR_DATOS, PATH_CARGAR_MODELO,
                         IMAGENES)
-from recursos.funciones_auxiliares import (printear_mapa, printear_un_ejemplo,
-                                           printear_un_ejemplo_imagen)
+from recursos.visualizacion import (printear_mapa, printear_un_ejemplo,
+                                    almacenar_ejemplo_imagen)
 from joblib import dump, load
 from random import randint
 import matplotlib.pyplot as plt
@@ -29,4 +29,4 @@ Y = dataframe[output_columns].values
 for i in range(5):
     index = randint(0, len(X) - 1)
     print(f'Ejemplo: {index}')
-    printear_un_ejemplo_imagen(X, Y, Y, (tx, ty), index=i)
+    almacenar_ejemplo_imagen(X, Y, Y, (tx, ty), index=i)

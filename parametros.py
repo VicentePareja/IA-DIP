@@ -15,6 +15,9 @@ ANCHO_MAPA_ENTRENAR = 200
 LARGO_MAPA_ENTRENAR = 200
 N_NEURONAS = 100
 PRINT_EJEMPLOS = False
+MAX_ITER = 35000
+RANDOM_STATE = 42
+TEST_SIZE = 0.001
 
 
 # Predecir con un modelo
@@ -39,3 +42,4 @@ PATH_IMAGENES_CSV = 'imagenes/nuevas imágenes/imágenes.csv'
 PATH_CARGAR_IMAGENES = 'imagenes/imágenes satelitales'
 PATH_ALMACENAR_RESULTADOS = 'imagenes/Resultados predicciones'
 PATH_IMAGENES_FUSIONADAS = 'imagenes/Resultados fusionados'
+THRESHOLD = 100

@@ -4,8 +4,9 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
 from parametros import (ANCHO_MAPA_ENTRENAR, LARGO_MAPA_ENTRENAR, PATH_ALMACENAR_MODELO,
-                        PATH_CARGAR_DATOS, N_NEURONAS, PRINT_EJEMPLOS, IMAGENES)
-from recursos.visualizacion import printear_un_ejemplo, printear_un_ejemplo_imagen
+                        PATH_CARGAR_DATOS, N_NEURONAS, PRINT_EJEMPLOS, IMAGENES, MAX_ITER,
+                        RANDOM_STATE, TEST_SIZE)
+from recursos.visualizacion import printear_un_ejemplo, almacenar_ejemplo_imagen
 from joblib import dump, load
 import numpy as np
 import pandas as pd
@@ -26,10 +27,11 @@ def load_data():
         return None
 
     logging.info("Datos cargados con éxito en {:.2f} segundos.".format(time.time() - start_time))
-    output_columns = ['tablero_final_' + str(i) for i in range(ANCHO_MAPA_ENTRENAR*LARGO_MAPA_ENTRENAR)]
+    output_columns = ['tablero_final_'
+                      + str(i) for i in range(ANCHO_MAPA_ENTRENAR*LARGO_MAPA_ENTRENAR)]
     X = dataframe.drop(output_columns, axis=1).values
     Y = dataframe[output_columns].values
-    return train_test_split(X, Y, test_size=0.1, random_state=42)
+    return train_test_split(X, Y, test_size=TEST_SIZE, random_state=RANDOM_STATE)
 
 
 def train_model(X_train, Y_train):
@@ -39,7 +41,7 @@ def train_model(X_train, Y_train):
     scaler = StandardScaler()
     X_train = scaler.fit_transform(X_train)
     model = MLPRegressor(hidden_layer_sizes=(N_NEURONAS, N_NEURONAS, N_NEURONAS, N_NEURONAS),
-                         max_iter=350000, random_state=42)
+                         max_iter=MAX_ITER, random_state=RANDOM_STATE)
     model.fit(X_train, Y_train)
 
     logging.info("Modelo entrenado con éxito en {:.2f} segundos.".format(time.time() - start_time))
@@ -76,8 +78,8 @@ if __name__ == "__main__":
             if IMAGENES:
                 # Se crean las predicciones
                 Y_pred = model.predict(X_train)
-                printear_un_ejemplo_imagen(X_train, Y_train, Y_pred,
-                                           (ANCHO_MAPA_ENTRENAR, LARGO_MAPA_ENTRENAR))
+                almacenar_ejemplo_imagen(X_train, Y_train, Y_pred,
+                                         (ANCHO_MAPA_ENTRENAR, LARGO_MAPA_ENTRENAR))
 
             else:
                 evaluate_model(model, scaler, X_train, X_test, Y_test)

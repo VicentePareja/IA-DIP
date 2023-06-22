@@ -1,4 +1,8 @@
 # .gitignore file
 
-# Ignora todos los archivos en la carpeta de modelos entrenados. Esto es dado sus grandes tamaños.
+# Ignora todos los archivos en la carpeta de modelos entrenados. Por su tamaño.
 /modelos_entrenados/*
+
+# Ignora todos los archivos en las carpetas de resultados de imágenes. Porque son muchas.
+/imagenes/Resultados\ fusionados/*
+/imagenes/Resultados\ predicciones/*
