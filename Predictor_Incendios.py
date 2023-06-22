@@ -6,19 +6,13 @@ from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
 from parametros import (ANCHO_MAPA_MODELO, LARGO_MAPA_MODELO, PATH_CARGAR_DATOS, PATH_CARGAR_MODELO,
                         IMAGENES)
 from recursos.visualizacion import (printear_mapa, printear_un_ejemplo,
-                                           printear_un_ejemplo_imagen)
+                                    printear_un_ejemplo_imagen)
 from joblib import dump, load
 from random import randint
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 from PIL import Image
-
-
-def cargar_imagen(path):
-    """Carga una imagen y la convierte en una matriz numpy"""
-    imagen = Image.open(path)
-    return np.array(imagen)
 
 
 tx, ty = ANCHO_MAPA_MODELO, LARGO_MAPA_MODELO

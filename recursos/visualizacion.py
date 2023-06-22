@@ -1,4 +1,4 @@
-# funciones_auxiliares.py
+# visualizacion.py
 from parametros import (ALPHA, PATH_ALMACENAR_RESULTADOS, PATH_IMAGENES_FUSIONADAS,
                         PATH_ALMACENAR_RESULTADOS, PATH_CARGAR_IMAGENES)
 from PIL import Image
@@ -79,11 +79,11 @@ def guardar_subimagen(fig, ax, titulo, index):
     index -- índice del ejemplo
     """
     # Crea los bordes de la subimagen
-    extent = ax.get_window_extent().transformed(fig.dpi_scale_trans.inverted())
+    extent = ax.get_tightbbox(fig.canvas.get_renderer()).transformed(fig.dpi_scale_trans.inverted())
 
     # Guarda la subimagen
     fig.savefig(PATH_ALMACENAR_RESULTADOS + f'/imagen_{titulo}_{index}.jpg',
-                bbox_inches=extent.expanded(1.2, 1.2))
+                bbox_inches=extent)
 
 
 def printear_un_ejemplo_imagen(X_train, Y_test, Y_pred, shape, index=0):
@@ -103,15 +103,13 @@ def printear_un_ejemplo_imagen(X_train, Y_test, Y_pred, shape, index=0):
 
     # Muestra las imágenes
     axs[0].imshow(inicial, cmap='hot')
-    axs[0].set_title("Inicial")
     axs[1].imshow(real, cmap='hot')
-    axs[1].set_title("Real")
     axs[2].imshow(pred, cmap='hot')
-    axs[2].set_title("Predicción")
 
     for ax in axs:
         ax.set_xticks([])
         ax.set_yticks([])
+        ax.axis('off')  # No muestra el marco de los subplots
 
     # Guarda cada subimagen
     guardar_subimagen(fig, axs[0], "inicial", index)
@@ -131,9 +129,6 @@ def printear_un_ejemplo_imagen(X_train, Y_test, Y_pred, shape, index=0):
                                                    index, "real")
 
     print(f"Imagen fusionada real guardada en: {imagen_fusionada_real_path}")
-
-    # Muestra la figura con todas las imágenes
-    plt.show()
 
 
 if __name__ == "__main__":
