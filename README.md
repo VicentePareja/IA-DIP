@@ -33,33 +33,33 @@ pip install numpy pandas sklearn joblib matplotlib pillow
 
 Para instalar el proyecto, clónalo en tu máquina local:
 
-\```shell
+```shell
 git clone https://github.com/VicentePareja/IA-DIP.git
-\```
+```
 
 ## Uso
 
 Primero, ejecuta la simulación para generar datos:
 
-\```shell
+```shell
 python crear_datos.py
-\```
+```
 
 Esto simulará un incendio forestal y guardará los estados iniciales y finales del bosque en un archivo CSV.
 
 Después, entrena y prueba el modelo de predicción utilizando los datos generados:
 
-\```shell
+```shell
 python entrenar_modelo.py
-\```
+```
 
 Esto entrenará un Regresor MLP utilizando los datos generados y guardará el modelo entrenado para futuras predicciones.
 
 Finalmente, realiza predicciones utilizando el modelo entrenado:
 
-\```shell
+```shell
 python predictor_incendios.py
-\```
+```
 
 ## Contribuyendo
 
