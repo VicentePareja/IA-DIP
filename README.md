@@ -25,9 +25,9 @@ Este proyecto requiere Python 3.8 o una versión más reciente. También necesit
 
 Puedes instalar estas bibliotecas usando pip:
 
-\```shell
+```shell
 pip install numpy pandas sklearn joblib matplotlib pillow
-\```
+```
 
 ### Instalación
 
